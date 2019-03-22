@@ -1,10 +1,12 @@
 import numpy as np
 import pickle
 
+from time import time
+
 from keras import Model
 from keras.layers import Activation, BatchNormalization, Convolution2D, Dense, Flatten, Input, MaxPooling2D
 from keras.optimizers import Adam
-from keras.callbacks import ModelCheckpoint, EarlyStopping
+from keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard
 from keras.utils.vis_utils import plot_model
 
 
@@ -30,6 +32,7 @@ if __name__ == '__main__':
     checkpoint_path = 'Models/malexnet_cnn.h1'
     early_stopper = EarlyStopping(monitor='loss', patience=10, verbose=0, mode='auto')
     checkpointer = ModelCheckpoint(filepath=checkpoint_path, verbose=1, save_best_only=True)
+    tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
 
     model_input = Input(shape=(224, 224, 3))
 
@@ -67,4 +70,4 @@ if __name__ == '__main__':
               shuffle=False,
               epochs=18,
               validation_data=(X_test, y_test),
-              callbacks=[checkpointer, early_stopper])
+              callbacks=[checkpointer, early_stopper, tensorboard])
