@@ -23,11 +23,12 @@ if __name__ == '__main__':
 
     le = LabelEncoder()
 
-    # features = read_models_from_file('Models/features.pckl')
-    labels = read_models_from_file('Models/labels.pckl')
+    features = read_models_from_file('Models/features_only_from_camera1.pckl')
+    labels = read_models_from_file('Models/labels_only_from_camera1.pckl')
 
     encoded_labels = le.fit_transform(labels)
     one_hot_encoded_labels = to_categorical(encoded_labels, len(set(encoded_labels)))
+    print(encoded_labels)
     print(one_hot_encoded_labels)
 
     # sss_test = StratifiedShuffleSplit(n_splits=3, test_size=0.5, random_state=0)
@@ -36,8 +37,8 @@ if __name__ == '__main__':
     #     y_train, y_test = one_hot_encoded_labels[train_index], one_hot_encoded_labels[test_index]
     #     break
     #
-    # save_models_into_file('Models/X_train.pckl', X_train)
-    # save_models_into_file('Models/X_test.pckl', X_test)
-    # save_models_into_file('Models/y_train.pckl', y_train)
-    # save_models_into_file('Models/y_test.pckl', y_test)
+    # save_models_into_file('Models/X_train_only_from_camera1.pckl', X_train)
+    # save_models_into_file('Models/X_test_only_from_camera1.pckl', X_test)
+    # save_models_into_file('Models/y_train_only_from_camera1.pckl', y_train)
+    # save_models_into_file('Models/y_test_only_from_camera1.pckl', y_test)
 

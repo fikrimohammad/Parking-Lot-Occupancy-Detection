@@ -24,12 +24,12 @@ def read_models_from_file(filename):
 
 if __name__ == '__main__':
 
-    X_train = read_models_from_file('Models/X_train.pckl')
-    X_test = read_models_from_file('Models/X_test.pckl')
-    y_train = read_models_from_file('Models/y_train.pckl')
-    y_test = read_models_from_file('Models/y_test.pckl')
+    X_train = read_models_from_file('Models/X_train_only_from_camera1.pckl')
+    X_test = read_models_from_file('Models/X_test_only_from_camera1.pckl')
+    y_train = read_models_from_file('Models/y_train_only_from_camera1.pckl')
+    y_test = read_models_from_file('Models/y_test_only_from_camera1.pckl')
 
-    checkpoint_path = 'Models/malexnet_cnn.h1'
+    checkpoint_path = 'Models/malexnet_cnn_only_from_camera1.h1'
     early_stopper = EarlyStopping(monitor='loss', patience=10, verbose=0, mode='auto')
     checkpointer = ModelCheckpoint(filepath=checkpoint_path, verbose=1, save_best_only=True)
     tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     model = Model(model_input, model_output)
 
     print(model.summary())
-    plot_model(model, to_file='malexnet_cnn.png', show_shapes=True, show_layer_names=True)
+    plot_model(model, to_file='malexnet_cnn_only_from_camera1.png', show_shapes=True, show_layer_names=True)
 
     model.compile(loss='binary_crossentropy',
                   optimizer=Adam(lr=0.001, decay=0.0005),
