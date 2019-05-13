@@ -1,3 +1,4 @@
+import joblib
 import numpy as np
 import pickle
 
@@ -24,27 +25,27 @@ def read_models_from_file(filename):
 
 if __name__ == '__main__':
 
-    X_train = read_models_from_file('Models/X_train_only_from_camera1.pckl')
-    X_test = read_models_from_file('Models/X_test_only_from_camera1.pckl')
-    y_train = read_models_from_file('Models/y_train_only_from_camera1.pckl')
-    y_test = read_models_from_file('Models/y_test_only_from_camera1.pckl')
+    X_train = np.array(read_models_from_file('Models/CNR-EXT_x_camera7.pckl'))
+    X_test = np.array(read_models_from_file('Models/CNR-EXT_x_camera8.pckl'))
+    y_train = read_models_from_file('Models/CNR-EXT_y_camera7.pckl')
+    y_test = read_models_from_file('Models/CNR-EXT_y_camera8.pckl')
 
-    checkpoint_path = 'Models/malexnet_cnn_only_from_camera1.h1'
+    checkpoint_path = 'Models/mAlexnet_trained_using_CNR-EXT_camera7.h5'
     early_stopper = EarlyStopping(monitor='loss', patience=10, verbose=0, mode='auto')
     checkpointer = ModelCheckpoint(filepath=checkpoint_path, verbose=1, save_best_only=True)
-    tensorboard = TensorBoard(log_dir="logs/{}".format(time()))
+    tensorboard = TensorBoard(log_dir="logs/mAlexnet_trained_using_CNR-EXT_camera7_{}".format(time()))
 
     model_input = Input(shape=(224, 224, 3))
 
     z = Convolution2D(filters=16, kernel_size=11, strides=(4, 4), padding='valid')(model_input)
     z = Activation('relu')(z)
-    z = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(z)
     z = BatchNormalization()(z)
+    z = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(z)
 
     z = Convolution2D(filters=20, kernel_size=5, strides=(1, 1), padding='valid')(z)
     z = Activation('relu')(z)
-    z = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(z)
     z = BatchNormalization()(z)
+    z = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(z)
 
     z = Convolution2D(filters=30, kernel_size=3, strides=(1, 1), padding='valid')(z)
     z = Activation('relu')(z)
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     model = Model(model_input, model_output)
 
     print(model.summary())
-    plot_model(model, to_file='malexnet_cnn_only_from_camera1.png', show_shapes=True, show_layer_names=True)
+    plot_model(model, to_file='mAlexnet_trained_using_CNR-EXT_camera7.png', show_shapes=True, show_layer_names=True)
 
     model.compile(loss='binary_crossentropy',
                   optimizer=Adam(lr=0.001, decay=0.0005),
