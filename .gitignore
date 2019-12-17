@@ -1,8 +1,4 @@
 venv
 .idea
 .vscode
-CNRPark
-CNR-EXT-Patches-150x150
-Dataset
-Models
-Preprocessed_Dataset
+data
