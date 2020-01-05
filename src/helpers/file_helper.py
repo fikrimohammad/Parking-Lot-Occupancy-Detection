@@ -1,4 +1,4 @@
-import pickle
+import joblib
 
 
 def read_txt(path):
@@ -6,9 +6,9 @@ def read_txt(path):
 
 
 def read_pckl(path):
-    return pickle.load(open(path, "rb"))
+    return joblib.load(open(path, "rb"))
 
 
 def save_pckl(path, model) -> None:
     with open(path, 'wb') as file:
-        pickle.dump(model, file)
+        joblib.dump(model, file)
