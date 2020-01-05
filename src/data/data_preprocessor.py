@@ -1,10 +1,10 @@
 import numpy as np
 import os
-import src.config.path as path
+import src.configs.path as path
 
 from keras.utils import to_categorical
-from src.helper.file_helper import *
-from src.helper.image_helper import *
+from src.helpers.file_helper import *
+from src.helpers.image_helper import *
 from tqdm import tqdm
 
 
@@ -17,41 +17,39 @@ class DataPreprocessorConfig:
 
 
 class DataPreprocessor(object):
-
     def __init__(self, config: DataPreprocessorConfig):
         self.config = config
-        self.features = []
-        self.labels = []
 
     def preprocess(self):
         print("Preprocessing {} dataset".format(self.__dataset_name()))
         for filename in os.listdir(self.__split_folder()):
             self.__init_preprocess()
-            infos = read_txt(self.__split_folder() + filename)
+            img_infos = read_txt(self.__split_folder() + filename)
             print("Preprocessing {} split".format(filename))
-            for info in tqdm(infos):
-                info = info.split(" ")
-                img_path = self.__img_folder() + info[0]
-                img_label = info[1]
+            for img_info in tqdm(img_infos):
+                self.__build_img(img_info)
+            self.__finalization(filename)
 
-                img = self.__build_img(img_path)
+    def __build_img(self, info):
+        info = info.split(" ")
+        img_path = self.__img_folder() + info[0]
+        img_label = info[1]
 
-                self.features.append(img)
-                self.labels.append(img_label)
-
-            features_path = '{}/{}_x_{}.pckl'.format(path.PROCESSED_DATA_PATH,
-                                                     self.__dataset_name(),
-                                                     filename[:-4])
-            labels_path = '{}/{}_y_{}.pckl'.format(path.PROCESSED_DATA_PATH,
-                                                   self.__dataset_name(),
-                                                   filename[:-4])
-            save_pckl(features_path, self.features)
-            save_pckl(labels_path, to_categorical(self.labels))
-
-    def __build_img(self, img_path):
         img = read(img_path)
         img = resize(img, self.__final_img_size())
-        return img
+
+        self.features.append(img)
+        self.labels.append(img_label)
+
+    def __finalization(self, filename):
+        features_path = '{}/{}_x_{}.pckl'.format(path.PROCESSED_DATA_PATH,
+                                                 self.__dataset_name(),
+                                                 filename[:-4])
+        labels_path = '{}/{}_y_{}.pckl'.format(path.PROCESSED_DATA_PATH,
+                                               self.__dataset_name(),
+                                               filename[:-4])
+        save_pckl(features_path, np.array(self.features))
+        save_pckl(labels_path, to_categorical(self.labels))
 
     def __dataset_name(self) -> str:
         return self.config.dataset_name
