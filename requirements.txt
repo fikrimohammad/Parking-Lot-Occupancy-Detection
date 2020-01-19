@@ -2,6 +2,7 @@ cerberus
 joblib
 keras
 opencv-contrib-python
+pylint
 scikit-learn
 tensorflow
 tqdm
