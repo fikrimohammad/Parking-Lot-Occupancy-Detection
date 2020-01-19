@@ -1,4 +1,4 @@
-from src.inputs.base_input import *
+from src.inputs.base_input import BaseInput
 
 
 class DataPreprocessorInput(BaseInput):
@@ -19,7 +19,8 @@ class DataPreprocessorInput(BaseInput):
             'final_size': {
                 'type': 'list',
                 'schema': {
-                    'type': 'integer'
+                    'type': 'integer',
+                    'min': 1
                 }
             }
         }

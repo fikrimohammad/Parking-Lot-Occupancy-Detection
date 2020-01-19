@@ -1,6 +1,5 @@
-import cv2
-import numpy as np
 from dataclasses import astuple, dataclass
+import cv2
 
 
 @dataclass
@@ -16,8 +15,10 @@ def read(path):
 
 
 def crop(image, config: CropImageConfig):
-    x, y, w, h = astuple(config)
-    cropped_image = image[y:y + h, x:x + w]
+    point_x, point_y, width, height = astuple(config)
+    new_height = point_y + height
+    new_width = point_x + width
+    cropped_image = image[point_y:new_height, point_x:new_width]
     return cropped_image
 
 

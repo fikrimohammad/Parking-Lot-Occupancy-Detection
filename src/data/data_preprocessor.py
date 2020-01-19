@@ -1,11 +1,14 @@
-import numpy as np
 import os
-import src.configs.path as path
+
+from dataclasses import dataclass
+import numpy as np
 
 from keras.utils import to_categorical
-from src.helpers.file_helper import *
-from src.helpers.image_helper import *
 from tqdm import tqdm
+
+import src.configs.path as path
+from src.helpers.file_helper import read_txt, save_pckl
+from src.helpers.image_helper import read, resize
 
 
 @dataclass
@@ -16,9 +19,11 @@ class DataPreprocessorConfig:
     final_img_size: tuple
 
 
-class DataPreprocessor(object):
+class DataPreprocessor:
     def __init__(self, config: DataPreprocessorConfig):
         self.config = config
+        self.features = []
+        self.labels = []
 
     def preprocess(self):
         print("Preprocessing {} dataset".format(self.__dataset_name()))

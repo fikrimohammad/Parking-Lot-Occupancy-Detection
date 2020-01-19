@@ -3,19 +3,21 @@ from cerberus import Validator
 
 
 class BaseInput:
-    def __init__(self, input):
+    def __init__(self, params):
         self.validator = Validator(self.rules())
-        self.input = input
+        self.params = params
 
     def validate(self):
-        if self.validator.validate(self.input):
-            return self.input
-        else:
-            self.__catch_errors(self.validator.errors)
+        if self.validator.validate(self.params):
+            return self.params
+        self.__catch_errors(self.validator.errors)
 
     def rules(self):
         pass
 
     @staticmethod
     def __catch_errors(errors):
-        sys.exit(errors)
+        print("Input parameter errors:")
+        for key, value in errors.items():
+            print("\t'{}': {}".format(key, value))
+        sys.exit()
