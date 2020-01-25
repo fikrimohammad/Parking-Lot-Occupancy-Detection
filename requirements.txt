@@ -1,7 +1,8 @@
 cerberus
 joblib
-keras
 opencv-contrib-python
+pydot
+pygraphviz
 pylint
 scikit-learn
 tensorflow
