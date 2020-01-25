@@ -3,4 +3,4 @@ venv
 .vscode
 data
 reports
-models
+/models
