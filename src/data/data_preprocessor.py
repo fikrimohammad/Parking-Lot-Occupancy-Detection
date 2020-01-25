@@ -3,7 +3,7 @@ import os
 from dataclasses import dataclass
 import numpy as np
 
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 from tqdm import tqdm
 
 import src.configs.path as path
@@ -47,10 +47,10 @@ class DataPreprocessor:
         self.labels.append(img_label)
 
     def __finalization(self, filename):
-        features_path = '{}/{}_x_{}.pckl'.format(path.PROCESSED_DATA_PATH,
+        features_path = '{}/{}_{}_x.pckl'.format(path.PROCESSED_DATA_PATH,
                                                  self.__dataset_name(),
                                                  filename[:-4])
-        labels_path = '{}/{}_y_{}.pckl'.format(path.PROCESSED_DATA_PATH,
+        labels_path = '{}/{}_{}_y.pckl'.format(path.PROCESSED_DATA_PATH,
                                                self.__dataset_name(),
                                                filename[:-4])
         save_pckl(features_path, np.array(self.features))
