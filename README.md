@@ -1,0 +1,2 @@
+# Parking-Lot-Occupancy-Detection
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8fcd7bf55e8541149717fb9e07e4e6f1)](https://app.codacy.com/manual/fikri.mohammad30/Parking-Lot-Occupancy-Detection?utm_source=github.com&utm_medium=referral&utm_content=fikrimohammad/Parking-Lot-Occupancy-Detection&utm_campaign=Badge_Grade_Dashboard)
